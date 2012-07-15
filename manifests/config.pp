@@ -2,7 +2,7 @@ class nagios3::config {
 
   if $nagios3::enable_check_external_commands {
     augeas {'enable_check_external_commands':
-      context => "/files/$nagios3::params::nagios3_config",
+      context => "/files/$nagios3::config",
       changes => [
         'set check_external_commands 1',
       ],
@@ -11,7 +11,7 @@ class nagios3::config {
 
   if $nagios3::disable_log_passive_checks {
     augeas {'disable_log_passive_checks':
-      context => "/files/$nagios3::params::nagios3_config",
+      context => "/files/$nagios3::config",
       changes => [
         'set log_passive_checks 0',
       ],
@@ -29,9 +29,15 @@ class nagios3::config {
     onlyif  => 'test `stat -c \'%a\' /var/lib/nagios3` -ne 751',
   }
 
-  user {'www-data':
+  user {"${name}-www-data":
     ensure  => present,
-    groups  => nagios,
+    name    => 'www-data',
+    groups  => $nagios3::nagios_group,
+  }
+  
+  file {'/usr/lib/nagios/plugins/check_icmp':
+    ensure => present,
+    mode   => '4755',
   }
 
 }

@@ -7,7 +7,8 @@ class nagios3 (
   $service_ensure                 = $nagios3::params::service_ensure,
   $service_enable                 = $nagios3::params::service_enable,
   $enable_check_external_commands = $nagios3::params::enable_check_external_commands,
-  $disable_log_passive_checks     = $nagios3::params::disable_log_passive_checks
+  $disable_log_passive_checks     = $nagios3::params::disable_log_passive_checks,
+  $nagios_group                   = $nagios3::params::nagios_group
 ) inherits nagios3::params {
 
   class {'nagios3::package':}

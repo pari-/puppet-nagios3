@@ -9,6 +9,8 @@ class nagios3::package {
   }
 
   package {$nagios3::package:
-    ensure  => $package_ensure,
+    ensure          => $package_ensure,
+    provider        => 'aptbpo',
+    install_options => { '-t' => 'squeeze-backports' },
   }
 }
